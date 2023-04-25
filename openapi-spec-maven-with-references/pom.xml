@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.apicurio.registry.examples</groupId>
+    <artifactId>openapi-spec-maven-with-references</artifactId>
+    <version>2.4.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+
+        <!-- Apicurio Registry Version -->
+        <apicurio-registry.version>2.4.2.Final</apicurio-registry.version>
+
+        <!-- Apicurio Registry Endpoint -->
+        <apicurio-registry.url>http://localhost:8080</apicurio-registry.url>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.apicurio</groupId>
+                <artifactId>apicurio-registry-maven-plugin</artifactId>
+                <version>${apicurio-registry.version}</version>
+                <executions>
+                    <execution>
+                        <id>register-artifact</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>register</goal>
+                        </goals>
+                        <configuration>
+                            <registryUrl>${apicurio-registry.url}/apis/registry/v2</registryUrl>
+                            <artifacts>
+                                <!-- OpenAPI with Ref Local -->
+                                <artifact>
+                                    <groupId>test-group</groupId>
+                                    <artifactId>entity-ref-local-api</artifactId>
+                                    <type>OPENAPI</type>
+                                    <file>
+                                        ${project.basedir}/src/main/resources/entity-ref-local-openapi.yaml
+                                    </file>
+                                    <ifExists>RETURN_OR_UPDATE</ifExists>
+                                    <canonicalize>true</canonicalize>
+                                    <references>
+                                        <reference>
+                                            <name>Entity</name>
+                                            <groupId>test-group</groupId>
+                                            <artifactId>Entity</artifactId>
+                                            <type>JSON</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/entity.json
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </reference>
+                                    </references>
+                                </artifact>
+
+                                <!-- OpenAPI with Ref URL -->
+                                <artifact>
+                                    <groupId>test-group</groupId>
+                                    <artifactId>entity-ref-url-api</artifactId>
+                                    <type>OPENAPI</type>
+                                    <file>
+                                        ${project.basedir}/src/main/resources/entity-ref-url-openapi.yaml
+                                    </file>
+                                    <ifExists>RETURN_OR_UPDATE</ifExists>
+                                    <canonicalize>true</canonicalize>
+                                    <references>
+                                        <reference>
+                                            <name>Entity</name>
+                                            <groupId>test-group</groupId>
+                                            <artifactId>Entity</artifactId>
+                                            <type>JSON</type>
+                                            <file>
+                                                ${project.basedir}/src/main/resources/schemas/entity.json
+                                            </file>
+                                            <ifExists>RETURN_OR_UPDATE</ifExists>
+                                            <canonicalize>true</canonicalize>
+                                        </reference>
+                                    </references>
+                                </artifact>                                
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

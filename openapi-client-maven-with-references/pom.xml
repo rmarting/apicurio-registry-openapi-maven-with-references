@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.apicurio.registry.examples</groupId>
+    <artifactId>openapi-client-maven-with-references</artifactId>
+    <version>2.4.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+
+        <!-- Apicurio Registry Version -->
+        <apicurio-registry.version>2.4.2.Final</apicurio-registry.version>
+
+        <!-- Apicurio Registry Endpoint -->
+        <apicurio-registry.url>http://localhost:8080</apicurio-registry.url>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.apicurio</groupId>
+                <artifactId>apicurio-registry-maven-plugin</artifactId>
+                <version>${apicurio-registry.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>download</goal>
+                        </goals>
+                        <configuration>
+                            <registryUrl>${apicurio-registry.url}/apis/registry/v2</registryUrl>
+                            <artifacts>
+                                <artifact>
+                                    <groupId>test-group</groupId>
+                                    <artifactId>entity-ref-local-api</artifactId>
+                                    <file>
+                                        ${project.basedir}/src/main/resources/entity-ref-local-openapi.yaml
+                                    </file>
+                                    <overwrite>true</overwrite>
+                                </artifact>
+
+                                <artifact>
+                                    <groupId>test-group</groupId>
+                                    <artifactId>entity-ref-url-api</artifactId>
+                                    <file>
+                                        ${project.basedir}/src/main/resources/entity-ref-url-openapi.yaml
+                                    </file>
+                                    <overwrite>true</overwrite>
+                                </artifact>
+
+                                <artifact>
+                                    <groupId>test-group</groupId>
+                                    <artifactId>Entity</artifactId>
+                                    <file>
+                                        ${project.basedir}/src/main/resources/schemas/entity.json
+                                    </file>
+                                    <overwrite>true</overwrite>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

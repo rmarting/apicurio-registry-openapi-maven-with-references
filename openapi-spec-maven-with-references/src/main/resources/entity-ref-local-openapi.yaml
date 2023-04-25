@@ -1,0 +1,15 @@
+openapi: 3.0.2
+info:
+  title: Entity Ref Local API
+  version: 1.0.0
+paths:
+  /entity:
+    get:
+      summary: Get entity endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: 'schemas/entity.json#/definitions/Entity'

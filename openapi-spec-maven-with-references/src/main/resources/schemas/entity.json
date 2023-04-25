@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-2020-12/schema",
+    "type": "object",
+    "title": "Entity",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "description": "Entity ID"
+      },
+      "name": {
+        "type": "string",
+        "description": "Entity name"
+      }
+    },
+    "required": ["id", "name"]
+}
